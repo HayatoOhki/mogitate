@@ -1,0 +1,31 @@
+body {
+    background-color: #f8f8f8;
+}
+
+main {
+    max-width: 1200px;
+    margin: auto;
+}
+
+/********** header **********/
+header {
+    background-color: #fff;
+    margin-bottom: 50px;
+}
+
+.header__title {
+    max-width: 1200px;
+    margin: auto;
+
+    h1 {
+        padding: 20px;
+        margin: 0;
+    }
+
+    a {
+        color: #f5c800;
+        font-family: "Homemade Apple", cursive;
+        font-weight: 400;
+        font-style: normal;
+    }
+}
