@@ -9,11 +9,11 @@
 <div class="title__area">
     <div class="page__title">
         <h2>
-            @isset($keyword)
-            "{{ $keyword }}"の商品一覧
+            @if(\Request::get('keyword'))
+            "{{ \Request::get('keyword') }}"の商品一覧
             @else
             商品一覧
-            @endisset
+            @endif
         </h2>
     </div>
     <div class="product__create--button">
@@ -22,12 +22,17 @@
 </div>
 <div class="main__content">
     <aside>
-        <form class="search__form" action="{{ route('products.search') }}" method="post">
-            @csrf
-            <input type="text" name="keyword" placeholder="商品名で検索" @isset($keyword) value="{{ $keyword }}" @endisset>
+        <form class="search__form" action="{{ route('products.search') }}" method="get">
+            <input type="text" name="keyword" placeholder="商品名で検索" value="{{ \Request::get('keyword') }}">
             <button type="submit">検索</button>
             <p>価格順で表示</p>
-            <select name="" id=""></select>
+            <div class="select__wrapper">
+                <select name="sort_order" id="sort_order" onchange="submit(this.form)">
+                    <option value="{{ \SortOrder::LIST['default'] }}" disabled @if(!\Request::get('sort_order')) selected @endif>価格で並べ替え</option>
+                    <option value="{{ \SortOrder::LIST['higherPrice'] }}"@if(\Request::get('sort_order') === \SortOrder::LIST['higherPrice']) selected @endif>高い順に表示</option>
+                    <option value="{{ \SortOrder::LIST['lowerPrice'] }}"@if(\Request::get('sort_order') === \SortOrder::LIST['lowerPrice']) selected @endif>低い順に表示</option>
+                </select>
+            </div>
         </form>
     </aside>
     <article>
@@ -35,7 +40,9 @@
             @foreach($products as $product)
             <div class="product__card">
                 <a href="{{ route('products.detail', ['product_id' => $product->id]) }}">
-                    <img src="{{ asset($product->image) }}" alt="{{ $product->name }}">
+                    <div class="product__card--image">
+                        <img src="{{ asset($product->image) }}" alt="{{ $product->name }}">
+                    </div>
                     <div class="product__card--info">
                         <p>{{ $product->name }}</p>
                         <p>￥{{ number_format($product->price) }}</p>
@@ -44,7 +51,12 @@
             </div>
             @endforeach
         </div>
-        {{ $products->links() }}
+        {{ $products
+            ->appends([
+                'keyword' => \Request::get('keyword'),
+                'sort_order' => \Request::get('sort_order'),
+                ])
+            ->links() }}
     </article>
 </div>
 @endsection
