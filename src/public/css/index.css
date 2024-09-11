@@ -41,12 +41,11 @@ article {
 }
 
 /********** search__form **********/
-.search__form {
+.search__area {
     border-bottom: 1px solid #e9e8e8;
+}
 
-    p {
-        font-weight: bold;
-    }
+.search__form {
 
     input,
     button,
@@ -93,6 +92,38 @@ article {
         border-top: 12px solid #e9e8e8;
         border-bottom: 0;
         pointer-events: none;
+    }
+}
+
+.tag__form {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 70%;
+    height: 50px;
+    border: 1px solid #f5c800;
+    border-radius: 25px;
+    margin: 15px 0;
+    padding: 0 10px;
+
+    p {
+        margin: 0;
+    }
+
+    a,
+    button {
+        color: #f5c800;
+        background-color: #f8f8f8;
+        border: 1px solid #f5c800;
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+    }
+
+    a {
+        display: inline-block;
+        text-align: center;
+        line-height: 25px;
     }
 }
 
