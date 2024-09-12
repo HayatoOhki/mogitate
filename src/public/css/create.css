@@ -1,0 +1,18 @@
+@import url("layouts/form.css");
+
+/********** main **********/
+main {
+    max-width: 800px;
+    margin: auto;
+}
+
+/********** create__form **********/
+.form__button {
+    text-align: center;
+}
+
+.form__submit,
+.back__button {
+    width: 25%;
+    margin: 0 10px;
+}

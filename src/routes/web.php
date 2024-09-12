@@ -14,7 +14,8 @@ use App\Http\Controllers\ProductController;
 |
 */
 
-Route::prefix('products')->name('products.')->group(function() {
+Route::prefix('products')->name('products.')->group(function()
+{
     // 商品一覧ページ表示
     Route::get('/', [ProductController::class, 'index'])->name('index');
     // 商品検索

@@ -17,14 +17,16 @@ class Product extends Model
     ];
 
     // キーワード検索
-    public function scopeSearchKeyword($query, $keyword) {
+    public function scopeSearchKeyword($query, $keyword)
+    {
         if(!is_null($keyword)) {
             $query->where('name', 'like', '%' . $keyword . '%');
         }
     }
 
     // 価格で並べ替え
-    public function scopeSortOrder($query, $sort_order) {
+    public function scopeSortOrder($query, $sort_order)
+    {
         if(!is_null($sort_order)) {
             if($sort_order === \SortOrder::LIST['higherPrice']) {
                 $query->orderBy('price', 'desc');

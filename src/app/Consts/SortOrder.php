@@ -2,7 +2,8 @@
 
 namespace App\Consts;
 
-class SortOrder {
+class SortOrder
+{
     const ORDER_DEFAULT = '0';
     const ORDER_HIGHER = '1';
     const ORDER_LOWER = '2';

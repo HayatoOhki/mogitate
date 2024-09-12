@@ -2,7 +2,6 @@
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/index.css') }}" />
-<link rel="stylesheet" href="{{ asset('css/paginate.css') }}" />
 @endsection
 
 @section('content')
@@ -21,14 +20,14 @@
     </div>
 </div>
 <div class="main__content">
-    <aside>
+    <div class="left-side">
         <div class="search__area">
             <form class="search__form" action="{{ route('products.search') }}" method="get">
-                <input type="text" name="keyword" placeholder="商品名で検索" value="{{ \Request::get('keyword') }}">
-                <button type="submit">検索</button>
-                <h3>価格順で表示</h3>
+                <input class="form__input" type="text" name="keyword" placeholder="商品名で検索" value="{{ \Request::get('keyword') }}">
+                <button class="form__submit" type="submit">検索</button>
+                <h3 class="form__subtitle">価格順で表示</h3>
                 <div class="select__wrapper">
-                    <select name="sort_order" id="sort_order" onchange="submit(this.form)">
+                    <select class="form__select" name="sort_order" id="sort_order" onchange="submit(this.form)">
                         <option value="{{ \SortOrder::LIST['default'] }}" disabled @if(!\Request::get('sort_order')) selected @endif>価格で並べ替え</option>
                         <option value="{{ \SortOrder::LIST['higherPrice'] }}"@if(\Request::get('sort_order') === \SortOrder::LIST['higherPrice']) selected @endif>高い順に表示</option>
                         <option value="{{ \SortOrder::LIST['lowerPrice'] }}"@if(\Request::get('sort_order') === \SortOrder::LIST['lowerPrice']) selected @endif>低い順に表示</option>
@@ -46,13 +45,13 @@
                 @if(\Request::get('keyword'))
                 <button type="submit">✕</button>
                 @else
-                <a href="{{ route('products.index') }}">✕</a>
+                <button type="button" onclick="location.href='{{ route('products.index') }}'">✕</button>
                 @endif
             </form>
             @endif
         </div>
-    </aside>
-    <article>
+    </div>
+    <div class="right-side">
         <div class="product__area">
             @foreach($products as $product)
             <div class="product__card">
@@ -74,6 +73,6 @@
                 'sort_order' => \Request::get('sort_order'),
                 ])
             ->links() }}
-    </article>
+    </div>
 </div>
 @endsection
