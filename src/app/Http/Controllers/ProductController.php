@@ -17,6 +17,7 @@ class ProductController extends Controller
     {
         $products = Product::select('id', 'name', 'price', 'image')
         ->paginate(6);
+
         return view('index', compact('products'));
     }
 
@@ -27,6 +28,7 @@ class ProductController extends Controller
         ->SearchKeyword($request->keyword)
         ->SortOrder($request->sort_order)
         ->paginate(6);
+
         return view('index', compact('products'));
     }
 
@@ -34,6 +36,7 @@ class ProductController extends Controller
     public function create()
     {
         $seasons = Season::select('id', 'name')->get();
+
         return view('create', compact('seasons'));
     }
 
@@ -44,7 +47,7 @@ class ProductController extends Controller
         if(!is_null($imageFile) && $imageFile->isValid()) {
             $fileName = uniqid(rand().'_') . '.' . $imageFile->extension();
             $dirName = 'images/product/';
-            $fileNameToStore = 'storage/' . $dirName . $fileName;
+            $fileNameToStore = $dirName . $fileName;
             Storage::putFileAs('public/' . $dirName, $imageFile, $fileName);
         }
 
@@ -73,20 +76,32 @@ class ProductController extends Controller
     }
 
     // 商品詳細ページ表示
-    public function detail()
+    public function detail($id)
     {
-        dd('test_detail');
+
+        $product = Product::findOrFail($id);
+        $seasons = Season::select('id', 'name')->get();
+
+        return view('detail', compact('product', 'seasons'));
     }
 
     // 商品更新
-    public function update()
+    public function update(ProductRequest $request)
     {
         dd('test_update');
     }
 
     // 商品削除
-    public function destroy()
+    public function destroy($id)
     {
-        dd('test_destroy');
+        $product = Product::findOrFail($id);
+        $image = $product->image;
+        $filePath = 'public/' . $image;
+        if(Storage::exists($filePath)) {
+            Storage::delete($filePath);
+        }
+        Product::findOrFail($id)->delete();
+
+        return redirect()->route('products.index');
     }
 }

@@ -19,8 +19,8 @@
         <a href="{{ route('products.create') }}">＋商品を追加</a>
     </div>
 </div>
-<div class="main__content">
-    <div class="left-side">
+<div class="separate__content">
+    <div class="left__side">
         <div class="search__area">
             <form class="search__form" action="{{ route('products.search') }}" method="get">
                 <input class="form__input" type="text" name="keyword" placeholder="商品名で検索" value="{{ \Request::get('keyword') }}">
@@ -51,13 +51,13 @@
             @endif
         </div>
     </div>
-    <div class="right-side">
+    <div class="right__side">
         <div class="product__area">
             @foreach($products as $product)
             <div class="product__card">
                 <a href="{{ route('products.detail', ['product_id' => $product->id]) }}">
                     <div class="product__card--image">
-                        <img src="{{ asset($product->image) }}" alt="{{ $product->name }}">
+                        <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
                     </div>
                     <div class="product__card--info">
                         <p>{{ $product->name }}</p>

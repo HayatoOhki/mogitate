@@ -3,6 +3,13 @@
     font-size: 20px;
 }
 
+.form__link {
+    margin-bottom: 10px;
+    a {
+        color: #0085ff;
+    }
+}
+
 .form__item {
     margin-bottom: 25px;
 }
@@ -42,6 +49,7 @@
 }
 
 .form__file--image {
+    display: block;
     width: 400px;
     height: 300px;
     object-fit: cover;
