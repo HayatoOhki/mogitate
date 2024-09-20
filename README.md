@@ -89,11 +89,11 @@
 
 
 ### 動作確認
-http://localhost/products にアクセスできるか確認  
-アクセスできたら成功
+以下のURLにアクセスできたら成功です。  
+http://localhost/products
 
 ### コンテナの停止
-以下のコマンドでコンテナを停止することができます  
+以下のコマンドでコンテナを停止することができます。  
 docker-compose down
 
 ## URL
