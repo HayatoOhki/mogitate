@@ -87,6 +87,8 @@ class ProductController extends Controller
     // 商品更新
     public function update(ProductRequest $request, $id)
     {
+        $product = Product::findOrFail($id);
+
         $imageFile = $request->image;
         if(!is_null($imageFile) && $imageFile->isValid()) {
             $fileName = uniqid(rand().'_') . '.' . $imageFile->extension();
@@ -96,18 +98,18 @@ class ProductController extends Controller
         }
 
         try {
-            DB::transaction(function () use($request, $id, $product, $fileNameToStore) {
+            DB::transaction(function () use($request, $product, $fileNameToStore) {
                 $product->name = $request->name;
                 $product->price = $request->price;
                 $product->image = $fileNameToStore;
                 $product->description = $request->description;
                 $product->save();
 
-                ProductSeason::where('product_id', $id)->delete();
+                ProductSeason::where('product_id', $product->id)->delete();
 
                 foreach($request->seasons as $season) {
                     ProductSeason::create([
-                        'product_id' => $id,
+                        'product_id' => $product->id,
                         'season_id' => $season,
                     ]);
                 }
