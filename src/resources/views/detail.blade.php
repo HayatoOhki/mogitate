@@ -27,7 +27,7 @@
         <div class="right__side">
             <div class="form__item">
                 <p class="form__item--name">商品名</p>
-                <input class="form__input" type="text" name="name" placeholder="商品名を入力" value="{{ old('name') }}">
+                <input class="form__input" type="text" name="name" placeholder="商品名を入力" value="{{ $product->name }}">
                 <div class="form__error">
                     @error('name')
                     {{ $message }}
@@ -36,7 +36,7 @@
             </div>
             <div class="form__item">
                 <p class="form__item--name">値段</p>
-                <input class="form__input" type="text" name="price" placeholder="値段を入力" value="{{ old('price') }}">
+                <input class="form__input" type="text" name="price" placeholder="値段を入力" value="{{ $product->price }}">
                 <div class="form__error">
                     @error('price')
                     {{ $message }}
@@ -50,7 +50,7 @@
                     <div class="appearance">
                         <label class="form__checkbox--label" for="{{ $season->name }}">
                             <input class="form__checkbox" type="checkbox" id="{{ $season->name }}" name="seasons[]" value="{{ $season->id }}"
-                            {{ !empty(old('seasons')) && in_array((string)$season->id, old('seasons'), true) ? 'checked' : ''}}>
+                            @if($product->is_season($season->id)) checked @endif>
                             {{ $season->name }}
                         </label>
                     </div>
@@ -66,7 +66,7 @@
     </div>
     <div class="form__item">
         <p class="form__item--name">商品説明</p>
-        <textarea class="form__textarea" name="description" placeholder="商品の説明を入力">{{ old('description') }}</textarea>
+        <textarea class="form__textarea" name="description" placeholder="商品の説明を入力">{{ $product->description }}</textarea>
         <div class="form__error">
             @error('description')
             {{ $message }}
@@ -84,6 +84,7 @@
     <button class="delete__button" id="deleteBtn" type="submit"><i class="fa-regular fa-trash-can fa-2x"></i></button>
 </form>
 
+<script src="{{ asset('js/input-file.js') }}"></script>
 <script src="{{ asset('js/delete-confirmation.js') }}"></script>
 
 @endsection

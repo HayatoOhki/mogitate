@@ -78,7 +78,6 @@ class ProductController extends Controller
     // 商品詳細ページ表示
     public function detail($id)
     {
-
         $product = Product::findOrFail($id);
         $seasons = Season::select('id', 'name')->get();
 
@@ -86,9 +85,47 @@ class ProductController extends Controller
     }
 
     // 商品更新
-    public function update(ProductRequest $request)
+    public function update(ProductRequest $request, $id)
     {
-        dd('test_update');
+        $product = Product::findOrFail($id);
+        $image = $product->image;
+        $filePath = 'public/' . $image;
+
+        $imageFile = $request->image;
+        if(!is_null($imageFile) && $imageFile->isValid()) {
+            $fileName = uniqid(rand().'_') . '.' . $imageFile->extension();
+            $dirName = 'images/product/';
+            $fileNameToStore = $dirName . $fileName;
+            Storage::putFileAs('public/' . $dirName, $imageFile, $fileName);
+        }
+
+        try {
+            DB::transaction(function () use($request, $id, $product, $fileNameToStore) {
+                $product->name = $request->name;
+                $product->price = $request->price;
+                $product->image = $fileNameToStore;
+                $product->description = $request->description;
+                $product->save();
+
+                ProductSeason::where('product_id', $id)->delete();
+
+                foreach($request->seasons as $season) {
+                    ProductSeason::create([
+                        'product_id' => $id,
+                        'season_id' => $season,
+                    ]);
+                }
+            }, 2);
+        } catch(Throwable $e) {
+            Log::error($e);
+            throw $e;
+        }
+
+        if(Storage::exists($filePath)) {
+            Storage::delete($filePath);
+        }
+
+        return redirect()->route('products.index');
     }
 
     // 商品削除

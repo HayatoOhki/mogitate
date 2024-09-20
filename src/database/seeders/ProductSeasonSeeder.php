@@ -15,10 +15,10 @@ class ProductSeasonSeeder extends Seeder
     public function run()
     {
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        DB::table('product_seasons')->truncate();
+        DB::table('product_season')->truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
-        $SplFileObject = new \SplFileObject(__DIR__ . '/data/product_seasons.csv');
+        $SplFileObject = new \SplFileObject(__DIR__ . '/data/product_season.csv');
         $SplFileObject->setFlags(
             \SplFileObject::READ_CSV |
             \SplFileObject::READ_AHEAD |
@@ -36,6 +36,6 @@ class ProductSeasonSeeder extends Seeder
             ];
         }
 
-        DB::table('product_seasons')->insert($params);
+        DB::table('product_season')->insert($params);
     }
 }

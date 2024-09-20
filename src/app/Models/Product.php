@@ -16,6 +16,17 @@ class Product extends Model
         'description',
     ];
 
+    public function productSeason()
+    {
+        return $this->hasMany(ProductSeason::class);
+    }
+
+    //受け取ったseason_idを選択しているか判定
+    public function is_season($season_id)
+    {
+        return $this->productSeason()->where('season_id', $season_id)->exists();
+    }
+
     // キーワード検索
     public function scopeSearchKeyword($query, $keyword)
     {
