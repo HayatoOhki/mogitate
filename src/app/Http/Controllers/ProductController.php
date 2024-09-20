@@ -87,10 +87,6 @@ class ProductController extends Controller
     // 商品更新
     public function update(ProductRequest $request, $id)
     {
-        $product = Product::findOrFail($id);
-        $image = $product->image;
-        $filePath = 'public/' . $image;
-
         $imageFile = $request->image;
         if(!is_null($imageFile) && $imageFile->isValid()) {
             $fileName = uniqid(rand().'_') . '.' . $imageFile->extension();
@@ -121,22 +117,12 @@ class ProductController extends Controller
             throw $e;
         }
 
-        if(Storage::exists($filePath)) {
-            Storage::delete($filePath);
-        }
-
         return redirect()->route('products.index');
     }
 
     // 商品削除
     public function destroy($id)
     {
-        $product = Product::findOrFail($id);
-        $image = $product->image;
-        $filePath = 'public/' . $image;
-        if(Storage::exists($filePath)) {
-            Storage::delete($filePath);
-        }
         Product::findOrFail($id)->delete();
 
         return redirect()->route('products.index');

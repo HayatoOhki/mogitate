@@ -81,11 +81,9 @@
 5. php artisan migrate --seed  
 ※上記のコマンドを実行しても「Nothing to migrate.」が返ってくる場合は以下のコマンドを実行してください。  
 ※既にテーブル内にデータが入っている場合は、それらが消えてしまうため注意してください。
-6. php artisan migrate:fresh --seed
-7. php artisan storage:link
-8. cp -r src/public/images src/storage/app/public/images  
-※商品を削除した際は画像データも同時に削除されるようになっていますので、  
-　ダミーデータを削除した際は再度上記コマンドを実行するようにしてください。
+php artisan migrate:fresh --seed
+6. php artisan storage:link
+7. cp -r src/public/images src/storage/app/public/images
 
 
 ### 動作確認
