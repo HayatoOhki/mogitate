@@ -80,7 +80,7 @@
 4. php artisan key:generate
 5. php artisan migrate --seed  
 ※上記のコマンドを実行しても「Nothing to migrate.」が返ってくる場合は以下のコマンドを実行してください。  
-※既にテーブル内にデータが入っている場合は、それらが消えてしまうため注意してください。
+※既にテーブル内にデータが入っている場合は、それらが消えてしまうため注意してください。  
 php artisan migrate:fresh --seed
 6. php artisan storage:link
 7. cp -r src/public/images src/storage/app/public/images
